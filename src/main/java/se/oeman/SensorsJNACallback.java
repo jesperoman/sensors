@@ -21,7 +21,6 @@ public class SensorsJNACallback {
 
     //save reference to callback to avoid garbage collection
     CLibrary.SensorCallback callback = new CLibrary.SensorCallback() {
-
       public void callbackfunction(
         Pointer protocol, Pointer model, int id,
         int dataType, Pointer value,

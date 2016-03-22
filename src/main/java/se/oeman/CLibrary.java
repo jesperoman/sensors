@@ -19,10 +19,10 @@ public interface CLibrary extends Library {
 
   public interface SensorCallback extends Callback {
     public void callbackfunction(
-                                    Pointer protocol, Pointer model, int id,
-                                    int dataType, Pointer value,
-                                    int timestamp, int callbackId,
-                                    Pointer context
+      Pointer protocol, Pointer model, int id,
+      int dataType, Pointer value,
+      int timestamp, int callbackId,
+      Pointer context
     );
   }
 }

@@ -13,5 +13,8 @@ public class SensorListener {
     });
 
     sensorsjnacallback.startListening();
+
+    System.out.println("Guess we never get here?");
+
   }
 }

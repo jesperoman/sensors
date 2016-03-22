@@ -1,5 +1,6 @@
 package se.oeman;
 
+import akka.actor.ActorRef;
 import com.sun.jna.Native;
 import com.sun.jna.Pointer;
 
@@ -10,9 +11,14 @@ public class SensorsJNACallback {
   int callbackID;
   CLibrary lib;
   CLibrary.SensorCallback callback;
+  private final ActorRef receiver;
+  private final ActorRef sender;
 
-  public SensorsJNACallback() {
+
+  public SensorsJNACallback(ActorRef receiver, ActorRef sender) {
     lib = (CLibrary) Native.loadLibrary("libtelldus-core.so.2", CLibrary.class);
+    this.receiver = receiver;
+    this.sender = sender;
   }
 
   public void startListening() {
@@ -32,9 +38,13 @@ public class SensorsJNACallback {
         Date date = new Date(timestampvalue);
 
         if (dataType == CLibrary.TELLSTICK_TEMPERATURE) {
-          System.out.println("Temperature: " + value.getString(0) + "C, " + date.toString());
+          String temp = value.getString(0);
+          System.out.println("Temperature: " + temp + "C, " + date.toString());
+          receiver.tell(new SensorData.Temperature(temp), sender);
         } else if (dataType == CLibrary.TELLSTICK_HUMIDITY) {
-          System.out.println("Humidity: " + value.getString(0) + "%, " + date.toString());
+          String humidity = value.getString(0);
+          System.out.println("Humidity: " + humidity + "%, " + date.toString());
+          receiver.tell(new SensorData.Humidity(humidity), sender);
         }
         System.out.println("");
       }
@@ -48,6 +58,7 @@ public class SensorsJNACallback {
         //just wait for sensor callbacks
         Thread.currentThread().sleep(1000);
       } catch (InterruptedException e) {
+        System.out.println("Interrupted exception!");
         System.exit(0);
       }
     }

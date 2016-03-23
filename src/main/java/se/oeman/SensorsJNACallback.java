@@ -33,20 +33,19 @@ public class SensorsJNACallback {
         int timestamp, int callbackId,
         Pointer context
       ) {
-        System.out.println("Sensor: " + protocol.getString(0) + " " + model.getString(0));
+        final String m = model.getString(0);
+        final String p = protocol.getString(0);
+        System.out.println("Sensor value received, sending to actor");
         long timestampvalue = (long) timestamp * 1000;
         Date date = new Date(timestampvalue);
 
         if (dataType == CLibrary.TELLSTICK_TEMPERATURE) {
-          String temp = value.getString(0);
-          System.out.println("Temperature: " + temp + "C, " + date.toString());
-          receiver.tell(new SensorData.Temperature(temp), sender);
+          final String temp = value.getString(0);
+          receiver.tell(new Temperature(temp, p, m, date), sender);
         } else if (dataType == CLibrary.TELLSTICK_HUMIDITY) {
-          String humidity = value.getString(0);
-          System.out.println("Humidity: " + humidity + "%, " + date.toString());
-          receiver.tell(new SensorData.Humidity(humidity), sender);
+          final String humidity = value.getString(0);
+          receiver.tell(new Humidity(humidity, p, m, date), sender);
         }
-        System.out.println("");
       }
     };
 

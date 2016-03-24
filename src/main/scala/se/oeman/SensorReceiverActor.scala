@@ -8,5 +8,7 @@ class SensorReceiverActor extends Actor {
       println(s"$d Sensor: $p $m Temperature: ${t}C")
     case Humidity(h, p, m, d) =>
       println(s"$d Sensor: $p $m Humidity: ${h}%")
+    case x =>
+      s"Unexpected message: $x"
   }
 }

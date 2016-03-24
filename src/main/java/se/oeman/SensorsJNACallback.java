@@ -11,17 +11,13 @@ public class SensorsJNACallback {
   int callbackID;
   CLibrary lib;
   CLibrary.SensorCallback callback;
-  private final ActorRef receiver;
-  private final ActorRef sender;
 
 
-  public SensorsJNACallback(ActorRef receiver, ActorRef sender) {
+  public SensorsJNACallback() {
     lib = (CLibrary) Native.loadLibrary("libtelldus-core.so.2", CLibrary.class);
-    this.receiver = receiver;
-    this.sender = sender;
   }
 
-  public void startListening() {
+  public void startListening(ActorRef receiver) {
 
     lib.tdInit();
 
@@ -40,10 +36,10 @@ public class SensorsJNACallback {
 
         if (dataType == CLibrary.TELLSTICK_TEMPERATURE) {
           final String temp = value.getString(0);
-          receiver.tell(new Temperature(temp, p, m, date), sender);
+          receiver.tell(new Temperature(temp, p, m, date), null);
         } else if (dataType == CLibrary.TELLSTICK_HUMIDITY) {
           final String humidity = value.getString(0);
-          receiver.tell(new Humidity(humidity, p, m, date), sender);
+          receiver.tell(new Humidity(humidity, p, m, date), null);
         }
       }
     };

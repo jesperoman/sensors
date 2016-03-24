@@ -13,7 +13,16 @@ class ScalaJNACallback {
   def startListening(receiver: ActorRef) {
     lib.tdInit()
     val callback: CLibrary.SensorCallback = new CLibrary.SensorCallback() {
-      def callbackfunction(protocol: Pointer, model: Pointer, id: Int, dataType: Int, value: Pointer, timestamp: Int, callbackId: Int, context: Pointer) {
+      def callbackfunction(
+        protocol: Pointer,
+        model: Pointer,
+        id: Int,
+        dataType: Int,
+        value: Pointer,
+        timestamp: Int,
+        callbackId: Int,
+        context: Pointer
+      ) = {
         val m: String = model.getString(0)
         val p: String = protocol.getString(0)
         val timestampvalue: Long = timestamp.toLong * 1000
@@ -21,8 +30,7 @@ class ScalaJNACallback {
         if (dataType == CLibrary.TELLSTICK_TEMPERATURE) {
           val temp: String = value.getString(0)
           receiver ! Temperature(temp, p, m, date)
-        }
-        else if (dataType == CLibrary.TELLSTICK_HUMIDITY) {
+        } else if (dataType == CLibrary.TELLSTICK_HUMIDITY) {
           val humidity: String = value.getString(0)
           receiver ! Humidity(humidity, p, m, date)
         }
@@ -42,7 +50,7 @@ class ScalaJNACallback {
     }
   }
 
-  def stopListening {
+  def stopListening = {
     System.out.println("Exiting")
     lib.tdUnregisterCallback(callbackID)
     callback = null

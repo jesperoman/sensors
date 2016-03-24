@@ -5,8 +5,6 @@ import scala.concurrent.duration._
 
 class SensorActor(jnaCallBack: Option[ScalaJNACallback], receiver: ActorRef) extends Actor {
 
-
-
   override def preStart = {
     println("Starting sensor listener")
     jnaCallBack.foreach(_.startListening(receiver))

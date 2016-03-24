@@ -21,13 +21,12 @@ class JNACallbackActor(receiver: ActorRef) extends Actor {
     ) = {
       val m: String = model.getString(0)
       val p: String = protocol.getString(0)
-      val timestampvalue: Long = timestamp.toLong * 1000
-      val date: Date = new Date(timestampvalue)
+      val date: Date = new Date(timestamp.toLong * 1000)
       dataType match {
         case CLibrary.TELLSTICK_HUMIDITY =>
-          receiver ! Humidity(value.getString(0), p, m, date)
+          receiver ! Humidity(id, value.getString(0), p, m, date)
         case CLibrary.TELLSTICK_TEMPERATURE =>
-          receiver ! Temperature(value.getString(0), p, m, date)
+          receiver ! Temperature(id, value.getString(0), p, m, date)
       }
     }
   }

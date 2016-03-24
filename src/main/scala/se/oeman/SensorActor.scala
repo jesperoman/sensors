@@ -19,7 +19,7 @@ class SensorActor(jnaCallBack: Option[ScalaJNACallback], receiver: ActorRef) ext
     }
   }
 
-  override def postStop = jnaCallBack.foreach(_.stopListening())
+  override def postStop = jnaCallBack.foreach(_.stopListening)
 
   override def receive = {
     case x => println("Huh?")

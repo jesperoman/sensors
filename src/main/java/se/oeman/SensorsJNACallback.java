@@ -17,7 +17,7 @@ public class SensorsJNACallback {
     lib = (CLibrary) Native.loadLibrary("libtelldus-core.so.2", CLibrary.class);
   }
 
-  public void startListening(ActorRef receiver) {
+  public void startListening(final ActorRef receiver) {
 
     lib.tdInit();
 

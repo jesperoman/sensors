@@ -3,7 +3,7 @@ package se.oeman
 import akka.actor.{ActorRef, Actor}
 import scala.concurrent.duration._
 
-class SensorActor(jnaCallBack: Option[SensorsJNACallback], receiver: ActorRef) extends Actor {
+class SensorActor(jnaCallBack: Option[ScalaJNACallback], receiver: ActorRef) extends Actor {
 
 
 

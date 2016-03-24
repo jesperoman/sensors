@@ -35,7 +35,6 @@ public class SensorsJNACallback {
       ) {
         final String m = model.getString(0);
         final String p = protocol.getString(0);
-        System.out.println("Sensor value received, sending to actor");
         long timestampvalue = (long) timestamp * 1000;
         Date date = new Date(timestampvalue);
 

@@ -2,10 +2,10 @@ package se.oeman
 
 import java.util.Date
 
-import akka.actor.{ActorRef, Actor}
-import com.sun.jna.{Pointer, Native}
+import akka.actor.{Actor, ActorSelection}
+import com.sun.jna.{Native, Pointer}
 
-class JNACallbackActor(receiver: ActorRef) extends Actor {
+class JNACallbackActor(receiver: ActorSelection) extends Actor {
   val lib = Native.loadLibrary("libtelldus-core.so.2", classOf[CLibrary]).asInstanceOf[CLibrary]
   lib.tdInit()
   val callback = new CLibrary.SensorCallback() {

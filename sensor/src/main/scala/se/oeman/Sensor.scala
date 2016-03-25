@@ -2,7 +2,7 @@ package se.oeman
 
 import akka.actor.{ActorSystem, Props}
 
-object Main extends App {
+object Sensor extends App {
   println("Creating actor system...")
   val system = ActorSystem.create("SensorSystem")
   println("Creating receiving actor...")

@@ -1,4 +1,4 @@
-package se.oeman
+package se.oeman.common
 
 import java.util.Date
 

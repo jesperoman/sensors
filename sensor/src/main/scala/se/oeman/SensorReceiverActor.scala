@@ -1,6 +1,7 @@
 package se.oeman
 
 import akka.actor.{ActorLogging, Actor}
+import se.oeman.common._
 
 class SensorReceiverActor extends Actor with ActorLogging {
   override def receive = {

@@ -24,8 +24,10 @@ class JNACallbackActor(receiver: ActorSelection) extends Actor {
       val date: Date = new Date(timestamp.toLong * 1000)
       dataType match {
         case CLibrary.TELLSTICK_HUMIDITY =>
+          println("Sending value...")
           receiver ! s"$date Id: $id, Sensor: $p $m Humidity: ${value.getString(0)}%"
         case CLibrary.TELLSTICK_TEMPERATURE =>
+          println("Sending value...")
           receiver ! s"$date Id: $id, Sensor: $p $m Temperature: ${value.getString(0)}C"
       }
     }
